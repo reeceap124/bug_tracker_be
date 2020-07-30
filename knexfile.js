@@ -3,9 +3,15 @@
 module.exports = {
 
   development: {
-    client: 'sqlite3',
+    client: 'pg',
     connection: {
-      filename: './dev.sqlite3'
+      host: process.env.HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB,
+    },
+    migrations: {
+      directory: './data/migrations',
     }
   },
 
