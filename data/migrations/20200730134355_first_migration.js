@@ -113,8 +113,6 @@ exports.up = function(knex) {
     .createTable(
         'comments', (tbl)=>{
             tbl.increments();
-            tbl.string('title')
-            .notNullable();
             tbl.string('comment', 1000)
             .notNullable();
             tbl.integer('issue_key') //issue assigned to
