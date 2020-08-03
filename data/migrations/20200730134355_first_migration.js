@@ -7,10 +7,10 @@ exports.up = function(knex) {
             tbl.increments();
             tbl.string('email', 255) //users email
             .notNullable()
-            // .unique();
+            .unique();
             tbl.string('display_name', 255) //unique display name
             .notNullable()
-            // .unique();
+            .unique();
             tbl.string('first_name', 255);
             tbl.string('last_name', 255);
             tbl.string('password', 255)
@@ -21,7 +21,8 @@ exports.up = function(knex) {
         'roles', (tbl)=>{
             tbl.increments();
             tbl.string('title', 255)
-            .notNullable();
+            .notNullable()
+            .unique();
         }
     )
     .createTable(

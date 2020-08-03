@@ -16,15 +16,15 @@ function findBy(filter) {
     return db('users').where(filter).first()
 };
 
+function getUser(filter) {
+    return db('user_org_roles').where(filter).first()
+}
+
 function add(user) {
-    console.log('in the add', user)
     return db('users').insert(user, 'id')
     .then(([id])=>{
         console.log('model then')
         return this.findBy({id})
-    })
-    .catch(()=>{
-        console.log('added, but faile to get by id')
     })
 }
 

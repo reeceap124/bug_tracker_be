@@ -5,6 +5,8 @@ const helmet = require('helmet')
 
 const authRouter = require('./auth/authRoutes');
 const userRouter = require('./endpoints/users/userRouter')
+const roleRouter = require('./endpoints/roles/roleRouter')
+const orgRouter = require('./endpoints/orgs/orgRouter')
 
 server.use(express.json());
 server.use(cors());
@@ -13,6 +15,8 @@ console.log('in the server')
 
 server.use('/api/auth', authRouter);
 server.use('/api/users', userRouter);
+server.use('/api/roles', roleRouter);
+server.use('/api/orgs', orgRouter);
 server.use('/', (req, res) => {
     return res.status(404).send("I think we're lost...")
 })
