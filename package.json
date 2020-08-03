@@ -1,11 +1,10 @@
 {
-  "name": "practice_server_side",
+  "name": "bugtracker",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js"
+    "nm": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +25,9 @@
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.2",
-    "nodemon": "^2.0.4",
     "pg": "^8.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
