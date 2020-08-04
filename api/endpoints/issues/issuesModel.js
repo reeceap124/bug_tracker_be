@@ -6,7 +6,9 @@ module.exports = {
 }
 
 function find(project){
-    return db('issues').where({project_key: project})
+    return db('issues')
+    .join('projects', 'issues.project_key', 'projects.id')
+    .where({project_key: project})
 }
 
 function add(issue){
