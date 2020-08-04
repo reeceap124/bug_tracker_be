@@ -21,7 +21,8 @@ exports.up = function(knex) {
         'roles', (tbl)=>{
             tbl.increments();
             tbl.string('title', 255)
-            .notNullable();
+            .notNullable()
+            .unique();
         }
     )
     .createTable(
