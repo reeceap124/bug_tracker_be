@@ -79,6 +79,14 @@ exports.up = function(knex) {
         }
     )
     .createTable(
+        'importance', (tbl)=>{
+            tbl.increments()
+            tbl.string('level', 255)
+            .notNullable
+            .unique;
+        }
+    )
+    .createTable(
         'issues', (tbl)=>{
             tbl.increments();
             tbl.string('title', 255) //because all things need titles
@@ -88,6 +96,13 @@ exports.up = function(knex) {
             tbl.boolean('open') //has the issue been resolved
             .notNullable()
             .defaultTo(false);
+            tbl.integer('importance') //severity of the issue
+            .notNullable()
+            .unsigned()
+            .references('id')
+            .inTable('importance')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');
             tbl.integer('project_key') //project that issue is assigned to
             .notNullable()
             .unsigned()
@@ -143,6 +158,7 @@ exports.down = function(knex) {
       knex.schema
       .dropTableIfExists('comments')
       .dropTableIfExists('issues')
+      .dropTableIfExists('importance')
       .dropTableIfExists('projects')
       .dropTableIfExists('user_org_roles')
       .dropTableIfExists('organizations')
