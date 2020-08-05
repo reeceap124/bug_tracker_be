@@ -7,7 +7,6 @@ module.exports = {
 
 function find(project){
     return db('issues')
-    .join('projects', 'issues.project_key', 'projects.id')
     .where({project_key: project})
 }
 
