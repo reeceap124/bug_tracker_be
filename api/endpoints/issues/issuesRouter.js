@@ -2,10 +2,7 @@ const express = require('express')
 const router = express.Router();
 const issues = require('./issuesModel')
 const users = require('../users/userModel')
-const roles = require('../roles/roleModel')
-// const orgs = require('../orgs/orgModel')
 const projects = require('../projects/projectsModel')
-const restrict = require('../../auth/restrictedMiddleware')
 
 router.post('/:id', async (req, res)=>{
     try {
