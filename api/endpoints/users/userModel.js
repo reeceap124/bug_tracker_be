@@ -24,7 +24,6 @@ function getAllOrgRoles(){
 }
 
 function getOrgRoles(id) {
-    console.log('getting org role', id)
     return db
     .select(
         'roles.id as rId',
@@ -40,14 +39,12 @@ function getOrgRoles(id) {
 }
 
 function addOrgRole(org_role) {
-    console.log('reached add org role')
     return db('user_org_roles').insert(org_role)
 }
 
 function add(user) {
     return db('users').insert(user, 'id')
     .then(([id])=>{
-        console.log('model then')
         return this.findBy({id})
     })
 }

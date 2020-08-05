@@ -3,71 +3,61 @@ const router = express.Router();
 const issues = require('./issuesModel')
 const users = require('../users/userModel')
 const roles = require('../roles/roleModel')
-const orgs = require('../orgs/orgModel')
+// const orgs = require('../orgs/orgModel')
 const projects = require('../projects/projectsModel')
 const restrict = require('../../auth/restrictedMiddleware')
 
-router.post('/:id')
+router.post('/:id', async (req, res)=>{
+    try {
+        const {id} = req.params
+        let issue = req.body
+        issue.project_key = id
+        const newIssue = await issues.add(issue);
+        res.status(201).json(newIssue)
+    }
+    catch(error){
+        res.status(500).json({message: 'Failed to add issue', error})
+    }
+    
 
-router.get('/:id', async(req, res)=>{
-    const {id} = req.params
-    let o_roles = {}
-    let o_projects = []
-    let user_issues = []
-    users.getOrgRoles(id)
-    .then(orgRoles=>{
-        if (orgRoles) {
-            orgRoles.forEach(orgRole=>{
-                // o_roles[orgRole.rTitle] = [...o_roles[orgRole.rTitle], orgRole.oTitle]
-                projects.find(orgRole.oId)
-                .then(orgProjects=>{
-                    if (orgProjects) {
-                        orgProjects.forEach(p=>{
-                            // o_projects.push(p)
-                            issues.find(p.id)
-                            .then(p_issues=>{
-                                p_issues.map(i=>{
-                                    i.org = orgRole.oTitle
-                                    i.role = orgRole.rTitle
-                                    user_issues.push(i)
-                                })
-                            })
-                            .catch(err=>{
-                                res.status(500).json({message:'failed to get issues', error: err})
-                            })
-                        })
-                    }
-                    else {
-                        console.log('This org has no projects.')
-                    }
-                })
-                .catch(err=>{
-                    res.status(500).json({message: "failed to get projects", error: err})
-                })
-            })
-        }
-        else {
-            return res.status(400).json({message: "It looks like you're not apart of an organizations"})
-        }
-    })
-    .catch(err=>{
-        res.status(500).json({message: 'Failed to get orgRoles'})
-    })
-    // let userOrgs = await users.getOrgRoles(id)
-    
-    
-    
-    // if (userOrgs && userOrgs.length > 0) {
-    //     userOrgs.forEach(org=>{
-    //         o_roles.push(org.rTitle) 
-    //         orgProjects = await projects.find(org.oId)
-    //         if (orgProjects && orgProjects.length > 0) {
-    //             o_projects = [...o_projects, ...orgProjects] //updates projects for filtering
-    //         }
-            
-
-    //     })
-    // }
 })
+
+router.get('/:id', async (req, res)=>{
+    try{
+        const {id} = req.params
+        let user_issues = []
+        let user_projects = []
+        const user_orgs = await users.getOrgRoles(id)
+        for (org in user_orgs) {
+            const pros = await projects.find(user_orgs[org].oId)
+            if (pros && pros.length > 0) {
+                for (p in pros) {
+                    pros[p].role = user_orgs[org].rId
+                }
+                const temp = user_projects.concat(pros)
+                user_projects = temp
+            }
+        }
+        for (p in user_projects) {
+            const i = await issues.find(user_projects[p].id)
+            
+            if(i && i.length > 0) {
+                for (j in i){
+                    i[j].org = user_projects[p].org_key
+                    i[j].role = user_projects[p].role
+                }
+                const temp = user_issues.concat(i)
+                user_issues = temp
+            }
+        }
+        res.status(200).json(user_issues)
+    }
+    catch (error) {
+        res.status(200).json({message: 'failed to get issues', error})
+    }
+
+    
+})
+
 
 module.exports = router

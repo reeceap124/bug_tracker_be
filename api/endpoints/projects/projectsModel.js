@@ -6,9 +6,7 @@ module.exports = {
 }
 
 function find(org) {
-    return db('projects')
-    .join('organizations', 'projects.org_key', 'organizations.id')//join needs work
-    .where({org_key: org})
+    return db('projects').where({org_key: org})
 }
 
 function add(project) {
