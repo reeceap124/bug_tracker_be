@@ -3,18 +3,7 @@ const router = express.Router();
 const users = require('./userModel')
 const restrict = require('../../auth/restrictedMiddleware')
 
-router.get('/', restrict, (req, res)=>{
-    users.getAll()
-    .then(users=>{
-        res.status(200).json(users)
-    })
-    .catch(err=>{
-        console.log('woops')
-        res.status(500).json({message: 'didnt got he', error: err})
-    })
-})
-
-router.get('/:id', restrict, async (req, res)=>{
+router.get('general/:id', restrict, async (req, res)=>{
     try {
         const {id} = req.params;
         let user = await users.findBy({id})
@@ -28,13 +17,32 @@ router.get('/:id', restrict, async (req, res)=>{
     }
 })
 
-router.get('/:id', async (req, res)=>{
+router.post('/orgRole/:id', async (req, res)=>{
+    try{
+        const {id} = req.params
+        req.body.user_key = id
+        let newRole = await users.addOrgRole(req.body)
+        if (newRole) {
+            res.status(201).json(newRole)
+        }
+        else {
+            res.status(404).json({message: 'failed to create new role'})
+        }
+    }
+    catch (error){
+        res.status(500).json(error)
+    }
+})
+
+router.get('/orgRole/:id', async (req, res)=>{
     try {
         const {id} = req.params
-        let user = await user.getUser({user_key: id})
-        if (user){
-            delete user.password
-            res.status(200).json(user)
+        let data = await users.getOrgRoles(id)
+        if (data) {
+            res.status(200).json(data)
+        }
+        else {
+            res.status(400).json({message: 'Failed to get those org roles'})
         }
     }
     catch (error){
