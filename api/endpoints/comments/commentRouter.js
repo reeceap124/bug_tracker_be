@@ -13,3 +13,5 @@ router.get('/:id', async (req, res)=>{
         res.status(500).json({message: 'failed to get comments', error})
     }
 })
+
+module.exports = router
