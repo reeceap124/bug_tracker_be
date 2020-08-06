@@ -19,6 +19,8 @@ router.post('/:id', async (req, res)=>{
 
 })
 
+//Will need to a alter this to only get issues associated with the user.
+//Currently getting all issues at an org.
 router.get('/:id', async (req, res)=>{
     try{
         const {id} = req.params
