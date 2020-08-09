@@ -117,7 +117,7 @@ exports.up = function(knex) {
             .inTable('users')
             .onDelete('CASCADE')
             .onUpdate('CASCADE')
-            tbl.timestamp('create_at') //when issue was created
+            tbl.timestamp('created_at') //when issue was created
             .notNullable()
             .defaultTo(knex.fn.now());
             tbl.timestamp('updated_at') //date last updated //may want to update this when a new comment rolls in

@@ -31,19 +31,21 @@ router.get('/:id', async (req, res)=>{
             const pros = await projects.find(user_orgs[org].oId)
             if (pros && pros.length > 0) {
                 for (p in pros) {
-                    pros[p].role = user_orgs[org].rId
+                    pros[p].role = user_orgs[org].rTitle
                 }
                 const temp = user_projects.concat(pros)
                 user_projects = temp
             }
         }
+        // console.log('PROJECTS', user_projects)
         for (p in user_projects) {
             const i = await issues.find(user_projects[p].id)
-            
+            // console.log('ISSUES: ', i)
             if(i && i.length > 0) {
                 for (j in i){
-                    i[j].org = user_projects[p].org_key
+                    i[j].org = user_projects[p].org
                     i[j].role = user_projects[p].role
+                    
                 }
                 const temp = user_issues.concat(i)
                 user_issues = temp
@@ -52,6 +54,7 @@ router.get('/:id', async (req, res)=>{
         res.status(200).json(user_issues)
     }
     catch (error) {
+        console.log('ERROR', error)
         res.status(200).json({message: 'failed to get issues', error})
     }
 
