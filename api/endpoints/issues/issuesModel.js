@@ -10,7 +10,7 @@ function find(project){
     .select(
         'issues.id as id',
         'content',
-        'create_at',
+        'created_at',
         'users.display_name as created_by', //join users
         'importance.level as importance', //join importance
         'open',

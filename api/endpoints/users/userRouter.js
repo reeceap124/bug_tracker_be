@@ -35,9 +35,11 @@ router.post('/orgRole/:id', async (req, res)=>{
 
 router.get('/orgRole/:id', async (req, res)=>{
     try {
+
         const {id} = req.params
         let data = await users.getOrgRoles(id)
         if (data) {
+            console.log(data)
             res.status(200).json(data)
         }
         else {
