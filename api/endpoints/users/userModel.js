@@ -35,7 +35,7 @@ function getOrgRoles(id) {
     .from('user_org_roles')
     .join('roles', 'user_org_roles.role_key', 'roles.id')
     .join('organizations', 'user_org_roles.org_key', 'organizations.id')
-    .where({user_key: id})
+    .where('user_key', id)
 }
 
 function addOrgRole(org_role) {
