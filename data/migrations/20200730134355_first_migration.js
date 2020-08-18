@@ -95,7 +95,7 @@ exports.up = function(knex) {
             .notNullable();
             tbl.boolean('open') //has the issue been resolved
             .notNullable()
-            .defaultTo(false);
+            .defaultTo(true);
             tbl.integer('importance') //severity of the issue
             .notNullable()
             .unsigned()

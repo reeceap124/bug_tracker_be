@@ -14,10 +14,10 @@ router.post('/register', (req, res)=>{
     person.password = hash
     
     db.add(person)
-    .then(saved=>{
+    .then(user=>{
         delete saved.password
-        const token = generateToken(saved)
-        res.status(201).json({saved, token})
+        const token = generateToken(user)
+        res.status(201).json({user, token})
     })
     .catch(err=>{
         console.log("ERROR: ", err)
