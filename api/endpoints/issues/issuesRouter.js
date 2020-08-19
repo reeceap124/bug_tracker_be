@@ -6,13 +6,13 @@ const projects = require('../projects/projectsModel')
 
 router.post('/:id', async (req, res)=>{
     try {
-        const {id} = req.params
         let issue = req.body
-        issue.project_key = id
+        console.log('MY ISSUE', issue)
         const newIssue = await issues.add(issue);
         res.status(201).json(newIssue)
     }
     catch(error){
+        console.log(error)
         res.status(500).json({message: 'Failed to add issue', error})
     }
     
