@@ -20,5 +20,8 @@ function find(org) {
 }
 
 function add(project) {
-    return db('projects').insert(project)
+    return db('projects').insert(project, 'id')
+    .then(([id])=>{
+        return db('projects').where({id}).first()
+    })
 }
