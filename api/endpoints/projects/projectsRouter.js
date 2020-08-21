@@ -17,6 +17,7 @@ router.post('/:id', (req, res)=> {
     project.org_key = req.params.id
     projects.add(project)
     .then((added)=>{
+        console.log('added', added)
         res.status(200).json(added)
     })
     .catch(err=>{
