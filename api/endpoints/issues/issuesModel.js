@@ -33,6 +33,7 @@ function add(issue){
 }
 
 function update(id, changes) {
+    changes.created_at = Date.now()
     return db('issues').where({id}).update(changes)
 }
 
