@@ -6,7 +6,6 @@ const db = require('../endpoints/users/userModel')
 router.post('/register', (req, res)=>{
     let person = req.body
     const {email, password, display_name} = person;
-    console.log("trying to register", person)
     if (!(email && display_name && password)) {
         return res.status(400).json({message: 'Missing required fields'})
     }
@@ -15,7 +14,7 @@ router.post('/register', (req, res)=>{
     
     db.add(person)
     .then(user=>{
-        delete saved.password
+        delete user.password
         const token = generateToken(user)
         res.status(201).json({user, token})
     })
@@ -26,7 +25,6 @@ router.post('/register', (req, res)=>{
 })
 
 router.post('/login', (req, res)=>{
-    console.log(req.body)
     const {email, password} = req.body
 
     if(!(email && password)) {
@@ -34,11 +32,6 @@ router.post('/login', (req, res)=>{
     }
     db.findBy({email})
     .then(user=>{
-        // if (password && password === user.password) {
-        //     delete user.password
-        //     const token = generateToken(user)
-        //     res.status(200).json({user, token})
-        // }
         if (user && bcrypt.compareSync(password, user.password)) {
             delete user.password
             const token = generateToken(user)
