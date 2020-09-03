@@ -2,7 +2,9 @@ const db = require('../../../data/db-config');
 
 module.exports = {
     find,
-    add
+    add,
+    update,
+    remove
 }
 
 function find(project){
@@ -28,4 +30,13 @@ function find(project){
 
 function add(issue){
     return db('issues').insert(issue)
+}
+
+function update(id, changes) {
+    changes.created_at = Date.now()
+    return db('issues').where({id}).update(changes)
+}
+
+function remove(id) {
+    return db('issues').where({id}).del()
 }
