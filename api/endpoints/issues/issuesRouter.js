@@ -21,7 +21,7 @@ router.post('/:id', async (req, res)=>{
 
 //Will need to a alter this to only get issues associated with the user.
 //Currently getting all issues at an org.
-router.get('/:id', async (req, res)=>{
+router.get('/list/:id', async (req, res)=>{
     try{
         const {id} = req.params
         let user_issues = []
@@ -57,9 +57,8 @@ router.get('/:id', async (req, res)=>{
         console.log('ERROR', error)
         res.status(200).json({message: 'failed to get issues', error})
     }
-
-    
 })
+
 
 router.put('/:id', (req, res)=>{
     issues.update(req.params.id, req.body)
