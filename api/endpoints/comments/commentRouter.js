@@ -14,4 +14,16 @@ router.get('/:id', async (req, res)=>{
     }
 })
 
+router.post('/:id', async (req, res)=>{
+    try {
+        const comment = await comments.add(req.body)
+        if (comment) {
+            res.status(201).json(comment)
+        }
+    }
+    catch (error) {
+        res.status(500).json({message: 'failed to add comment', error})
+    }
+})
+
 module.exports = router
