@@ -102,7 +102,6 @@ NOTE: These will be expanding as the application gets fleshed out further.
 <br/>
 
 ### Issues:
-
 |Method|Endpoint|Description|
 |-|-|-|
 |GET|`HOST/api/issues/list/:id`|Returns a list of all issues associated with all organizations that a user( id ) is a part of.
@@ -111,4 +110,10 @@ NOTE: These will be expanding as the application gets fleshed out further.
 |PUT|`HOST/api/issues/:id`|Updates and issue at the given id|
 |DELETE|`HOST/api/issues/:id`|Deletes an issue at the given id|
 
+<br/>
 
+### Comments:
+|Method|Endpoint|Description|
+|-|-|-|
+|GET|`HOST/api/comments/list/:id`|Returns a list of comments on the issue with the given id|
+|POST|`HOST/api/comments/:id`|Adds a comment to the issue with the given id|

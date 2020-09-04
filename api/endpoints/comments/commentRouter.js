@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 const comments = require('./commentModel')
 
-router.get('/:id', async (req, res)=>{
+router.get('/list/:id', async (req, res)=>{
     try {
         const list = await comments.findBy({issue_key: req.params.id})
         if (list) {
