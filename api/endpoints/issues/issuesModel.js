@@ -47,7 +47,7 @@ function findById(id){
     .join('users', 'issues.created_by', 'users.id')
     .join('importance', 'issues.importance', 'importance.id')
     .join('projects', 'issues.project_key', 'projects.id')
-    .where({id}).first()
+    .where('issues.id', id).first()
 }
 
 function add(issue){

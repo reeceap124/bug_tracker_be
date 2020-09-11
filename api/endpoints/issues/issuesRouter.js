@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router();
 const issues = require('./issuesModel')
 const users = require('../users/userModel')
-const projects = require('../projects/projectsModel')
+const projects = require('../projects/projectsModel');
+const { route } = require('../projects/projectsRouter');
 
 router.post('/:id', async (req, res)=>{
     try {
@@ -40,7 +41,6 @@ router.get('/list/:id', async (req, res)=>{
         // console.log('PROJECTS', user_projects)
         for (p in user_projects) {
             const i = await issues.find(user_projects[p].id)
-            // console.log('ISSUES: ', i)
             if(i && i.length > 0) {
                 for (j in i){
                     i[j].org = user_projects[p].org
@@ -54,8 +54,19 @@ router.get('/list/:id', async (req, res)=>{
         res.status(200).json(user_issues)
     }
     catch (error) {
-        console.log('ERROR', error)
         res.status(200).json({message: 'failed to get issues', error})
+    }
+})
+
+router.get('/specific/:id', async (req, res)=>{
+    try {
+        const issue = await issues.findById(req.params.id)
+        if (issue) {
+            res.status(200).json(issue)
+        }
+    }
+    catch (error) {
+        res.status(500).json({message: 'failed to get that issue', error})
     }
 })
 

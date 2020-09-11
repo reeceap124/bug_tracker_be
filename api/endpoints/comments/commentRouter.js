@@ -18,10 +18,11 @@ router.post('/:id', async (req, res)=>{
     try {
         const comment = await comments.add(req.body)
         if (comment) {
-            res.status(201).json(comment)
+            res.status(201).json(comment[0])
         }
     }
     catch (error) {
+        console.log('error', error)
         res.status(500).json({message: 'failed to add comment', error})
     }
 })

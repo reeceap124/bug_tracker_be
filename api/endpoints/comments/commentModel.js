@@ -10,5 +10,5 @@ function findBy(filter) {
 }
 
 function add(comment) {
-    return db('comments').insert(comment)
+    return db('comments').insert(comment, '*')
 }
