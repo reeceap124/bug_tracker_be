@@ -51,12 +51,12 @@ function findById(id){
 }
 
 function add(issue){
-    return db('issues').insert(issue)
+    db('issues').insert(issue, '*')
 }
 
 function update(id, changes) {
     changes.created_at = Date.now()
-    return db('issues').where({id}).update(changes)
+    return db('issues').where({id}).update(changes, '*')
 }
 
 function remove(id) {
